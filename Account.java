@@ -8,7 +8,7 @@ public abstract class Account {
     public abstract boolean withdraw(Currency money);
 
     public void deposit(Currency moneyIn) {
-        if (moneyIn > 0) {
+        if (moneyIn.getValue() > 0) {
             balance.add(moneyIn);
         }
     }
