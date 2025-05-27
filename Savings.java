@@ -13,12 +13,27 @@ public class Savings extends Account {
     }
 
     Currency getBalance() {
-        double tempBalance = balance.getValue()*(1+(rate/100));
+        double interest = balance.getValue()*(rate/100);
         int balanceAfterInterest = (int) tempBalance;
         balance = new Currency(balanceAfterInterest);
         return balance;
     }
 
+    public void withdraw(Currency moneyOut) {
+        if (moneyOut == null) { 
+            throw new IllegalArgumentException("Withdrawal amount must be positive.");
+        } elseIf (balance.compareTo(moneyOut) == -1) {
+            throw new IllegalStateException("You do not have sufficient funds for this withdrawal.");
+        } 
+        balance.subtract(moneyOut); 
+    }
+
+    public void deposit(Currency moneyIn) {
+        if (moneyIn == null) { 
+            throw new IllegalArgumentException("Deposit amount must be positive.");
+        } 
+        balance.add(moneyIn); 
+    }
 
     public void withdraw(Currency money) {
         balance = balance.subtract(money);
