@@ -5,7 +5,7 @@ public abstract class Account {
         this.balance = new Currency(initialDeposit.getValue());
     }
 
-    public abstract boolean withdraw(Currency money);
+    public abstract void withdraw(Currency money);
 
     public abstract deposit(Currency moneyIn);
 
