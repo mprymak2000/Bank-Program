@@ -1,7 +1,10 @@
 public class Savings extends Account {
 
     private double rate;
+    private int withdrawalCount;
+    static final int withdrawalCountLimit = 3;
     static final String type = "Savings";
+
 
     public Savings(Currency initial, double rate) {
         super(initial);
@@ -10,9 +13,9 @@ public class Savings extends Account {
     }
 
     Currency getBalance() {
-        double tempBalance = balance.getValue()*rate;
-        int newBalance = (int) tempBalance;
-        balance = new Currency(newBalance);
+        double tempBalance = balance.getValue()*(1+(rate/100));
+        int balanceAfterInterest = (int) tempBalance;
+        balance = new Currency(balanceAfterInterest);
         return balance;
     }
 
