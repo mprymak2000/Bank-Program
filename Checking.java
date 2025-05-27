@@ -6,7 +6,7 @@ public class Checking extends Account {
         super(initialAmount);
     }
 
-    public voild withdraw(Currency moneyOut) {
+    public void withdraw(Currency moneyOut) {
         if (moneyOut == null) { 
             throw new IllegalArgumentException("Withdrawal amount must be positive.");
         } elseIf (balance.compareTo(moneyOut) == -1) {
