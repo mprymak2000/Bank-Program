@@ -14,8 +14,7 @@ public class Savings extends Account {
 
     Currency getBalance() {
         double interest = balance.getValue()*(rate/100);
-        int balanceAfterInterest = (int) tempBalance;
-        balance = new Currency(balanceAfterInterest);
+        balance.add(new Currency((int) interest)); 
         return balance;
     }
 
