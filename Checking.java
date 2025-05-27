@@ -9,17 +9,14 @@ public class Checking extends Account {
     }
 
     public boolean withdraw(Currency moneyOut) {
-        if (moneyOut.getValue() <= balance) {
+        if (balance.compareTo(moneyOut) != -1) {
             balance = balance.subtract(moneyOut);
             return true;
         } else { return false; }
     }
 
-    public boolean deposit(Currency moneyIn) {
-        if (moneyIn.getValue() > 0) {
-            balance = balance.add(money);
-            return true;
-        } else { return false; }
+    public void deposit(Currency moneyIn) {
+        balance.add(moneyIn);
     }
 
     Currency getBalance() {
