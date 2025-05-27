@@ -9,7 +9,7 @@ public abstract class Account {
 
     public void deposit(Currency moneyIn) {
         if (moneyIn > 0) {
-            balance.
+            balance.add(moneyIn);
         }
     }
 
