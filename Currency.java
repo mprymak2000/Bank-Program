@@ -1,10 +1,12 @@
-public class Currency implements Comparable{
+public class Currency implements Comparable<Currency>{
     private int cents;
 
     public Currency() {}
 
     public Currency(int cents) {
-        this.cents = cents;
+        if (cents >= 0) {
+            this.cents = cents;
+        } else throw new IllegalArgumentException("Currency must be greater than 0")
     }
 
     public int getValue() {
@@ -23,9 +25,8 @@ public class Currency implements Comparable{
         return "$" + cents/100;
     }
 
-    public int compareTo(Object o) {
-        Currency temp = (Currency) o;
-        if (temp.cents > cents)
+    public int compareTo(Currency other) {
+        if (other.cents > cents)
             return -1;
         else if (temp.cents == cents)
             return 0;
