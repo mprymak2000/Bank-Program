@@ -5,9 +5,13 @@ public abstract class Account {
         this.balance = new Currency(initialDeposit.getValue());
     }
 
-    public abstract void withdraw(Currency money);
+    public abstract boolean withdraw(Currency money);
 
-    public abstract void deposit(Currency money);
+    public void deposit(Currency moneyIn) {
+        if (moneyIn > 0) {
+            balance.
+        }
+    }
 
     abstract Currency getBalance();
 }
