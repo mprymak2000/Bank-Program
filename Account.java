@@ -7,7 +7,7 @@ public abstract class Account {
 
     public abstract void withdraw(Currency money);
 
-    public abstract deposit(Currency moneyIn);
+    public abstract void deposit(Currency moneyIn);
 
     abstract Currency getBalance();
 }
