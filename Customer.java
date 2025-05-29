@@ -1,6 +1,3 @@
-import java.io.InvalidObjectException;
-import java.security.InvalidParameterException;
-
 public class Customer {
 
     private String first;
@@ -8,32 +5,26 @@ public class Customer {
     private int numAccounts;
     protected Account[] accountArr = new Account[3];
 
-    static InvalidParameterException ipe = new InvalidParameterException("You do not have enough money to withdraw");
-    static NullPointerException npe = new NullPointerException("");
-
     public Customer (String first, String last) {
         this.first = first;
         this.last = last;
     }
 
-    public void addAccount(Account account) throws Exception{
-        if (numAccounts==3)
-            throw new Exception("You have already opened each account");
-        else if(account instanceof Checking) {
-            if (accountArr[0] != null)
-                throw new InvalidObjectException("You already have a Checking account");
-            else accountArr[0] = account;;
-;        }
-        else if(account instanceof Savings) {
-            if (accountArr[1] == null)
-                accountArr[1] = account;
-            else throw new InvalidObjectException("You already have a Savings account");
+    public void addAccount(Account account) throws InvalidTransactionException {
+        if (numAccounts==3) {
+            throw new InvalidTransactionException("You have already opened each account");
         }
-        else {
-            if (accountArr[2] == null)
-                accountArr[2] = account;
-            else throw new InvalidObjectException("You already have a CD account");
+        if (account == null) {
+            throw new InvalidTransactionException("Account cannot be null" );
         }
+        if (account instanceof Checking) {
+           addIfEmpty(0, account, "Checking");
+        } else if (account instanceof Savings) {
+           addIfEmpty(1, account, "Savings");
+        }
+        else if {account instanceof CD) {
+            addIfEmpty(0, account, "CD");
+        } else throw InvalidTransactionException("Unknown type of account");
         numAccounts++;
     }
 
@@ -94,5 +85,11 @@ public class Customer {
         Customer temp = (Customer) obj;
         return this.first == temp.first && this.last == temp.last;
 
+    }
+
+    private void addIfEmpty(Account account, int index, String type) {
+        if (accountArr[index] != null) {
+            throw InvalidTransactionException("You already have a " + type + " account");
+        } else accountArr[index] = account;
     }
 }
