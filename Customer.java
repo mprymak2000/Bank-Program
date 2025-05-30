@@ -15,7 +15,7 @@ public class Customer {
             throw new InvalidTransactionException("You have already opened each account");
         }
         if (account == null) {
-            throw new InvalidTransactionException("Account cannot be null" );
+            throw new InvalidArgumentException("Account cannot be null" );
         }
         if (account instanceof Checking) {
            addIfEmpty(0, account, "Checking");
@@ -36,8 +36,58 @@ public class Customer {
         return last;
     }
 
-    public void deposit(Currency money, String type) {
-        if (type == "0") {
+    public void deposit(Currency money, Account account) throws InvalidTransactionException{
+        if (account == null) {
+            throw new IllegalArgumentException("Account cannot be null" );
+        } elseif {account instanceof CD) {
+            throw new InvalidTransactionException("You cannot deposit more into a CD Account");
+        } 
+                  
+        if (account instanceof Checking || account instanceof Savings) {
+            account.deposit(money);
+        } else throw IllegalArgumentException("Unknown type of account");
+    }
+        
+     public void withdraw(Currency money, Account account) throws InvalidTransactionException {
+         if (account == null) {
+            throw new IllegalArgumentException("Account cannot be null" );
+        } elseif {account instanceof CD) {
+            throw new InvalidTransactionException("You cannot deposit more into a CD Account");
+        } 
+                  
+        if (account instanceof Checking || account instanceof Savings) {
+            account.withdraw(money);
+        } else throw IllegalArgumentException("Unknown type of account");
+    }
+
+    public void balance(Currency money, Account account) {
+        if (account == null) {
+            throw new IllegalArgumentException("Account cannot be null" );
+         }
+        if (account instanceof Checking || account instanceof Savings || account instanceof CD) {
+            account.withdraw(money);
+        } else throw IllegalArgumentException("Unknown type of account");
+    }
+
+
+    public boolean equals(Object obj) {
+        if(obj instanceof Customer == false)
+            return false;
+        Customer temp = (Customer) obj;
+        return this.first == temp.first && this.last == temp.last;
+    }
+
+    private void addIfEmpty(Account account, int index, String type) {
+        if (accountArr[index] != null) {
+            throw InvalidTransactionException("You already have a " + type + " account");
+        } else accountArr[index] = account;
+    }
+}
+
+
+        
+        
+/*        if (type == "0") {
             if (accountArr[0] == null)
                 throw new NullPointerException("You do not possess a Checking account");
             else accountArr[0].deposit(money);
@@ -53,7 +103,7 @@ public class Customer {
             else accountArr[2].deposit(money);
         }
         else throw new IllegalArgumentException("Please enter a valid account you would like to deposit to.");
-    }
+    
 
     public void withdraw(Currency money, String type) {
         if (type == "0") {
@@ -77,19 +127,4 @@ public class Customer {
             else accountArr[2].withdraw(money);
         } else throw new IllegalArgumentException("Please enter a valid account you would like to withdraw from");
     }
-
-
-    public boolean equals(Object obj) {
-        if(obj instanceof Customer == false)
-            return false;
-        Customer temp = (Customer) obj;
-        return this.first == temp.first && this.last == temp.last;
-
-    }
-
-    private void addIfEmpty(Account account, int index, String type) {
-        if (accountArr[index] != null) {
-            throw InvalidTransactionException("You already have a " + type + " account");
-        } else accountArr[index] = account;
-    }
-}
+*/
