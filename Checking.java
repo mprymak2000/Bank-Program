@@ -1,5 +1,3 @@
-package com.MichalPrymak;
-
 public class Checking extends Account {
 
     static final String type = "Checking";

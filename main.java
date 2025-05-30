@@ -2,7 +2,7 @@ import java.io.InvalidObjectException;
 import java.security.InvalidParameterException;
 import java.util.Scanner;
 
-public class Main {
+public class main {
 
     static Scanner sc = new Scanner(System.in);
     public static boolean end = false;
@@ -143,3 +143,4 @@ public class Main {
         }
         return new Currency(value*100);
     }
+}
