@@ -6,12 +6,20 @@ public class Checking extends Account {
         super(initialAmount);
     }
 
-    public void withdraw(Currency money) {
-        balance = balance.subtract(money);
+    public void withdraw(Currency moneyOut) {
+        if (moneyOut == null) { 
+            throw new IllegalArgumentException("Withdrawal amount must be positive.");
+        } elseIf (balance.compareTo(moneyOut) == -1) {
+            throw new IllegalStateException("You do not have sufficient funds for this withdrawal.");
+        } 
+        balance.subtract(moneyOut); 
     }
 
-    public void deposit(Currency money) {
-        balance = balance.add(money);
+    public void deposit(Currency moneyIn) {
+        if (moneyIn == null) { 
+            throw new IllegalArgumentException("Deposit amount must be positive.");
+        } 
+        balance.add(moneyIn); 
     }
 
     Currency getBalance() {
