@@ -14,15 +14,15 @@ public class Savings extends Account {
 
     Currency getBalance() {
         double balanceAfterInterest = balance.getValue()*((1+rate/100));
-        return new Currency((int) balanceAfterInterest)); 
+        return new Currency((int) balanceAfterInterest); 
     }
 
     public void withdraw(Currency moneyOut) {
         if (moneyOut == null) { 
             throw new IllegalArgumentException("Withdrawal amount must be positive.");
-        } elseIf (balance.compareTo(moneyOut) == -1) {
+        } else if (balance.compareTo(moneyOut) == -1) {
             throw new IllegalStateException("You don't have sufficient funds for this withdrawal.");
-        } elseIf (withdrawalCount > withdrawalCountLimit) {
+        } else if (withdrawalCount > withdrawalCountLimit) {
             throw new IllegalStateException("You've exceeded your withdrawal limit for this banking period.");
         }
         balance.subtract(moneyOut); 

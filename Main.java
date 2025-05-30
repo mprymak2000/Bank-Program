@@ -1,8 +1,6 @@
-import java.io.InvalidObjectException;
-import java.security.InvalidParameterException;
 import java.util.Scanner;
 
-public class main {
+public class Main {
 
     static Scanner sc = new Scanner(System.in);
     public static boolean end = false;
@@ -14,7 +12,7 @@ public class main {
             printMenu();
             int input = input(6);
             Customer customer;
-            String type;
+            int type;
 
             try {
                 switch (input) {
@@ -29,14 +27,15 @@ public class main {
                         type = accountTypeInput();
                         System.out.println("Please provide an initial deposit");
                         Currency money = moneyValueInput();
-                        System.out.println(money.getValue());
                         bank.makeAccount(customer, type, money);
-                        System.out.println("Your account was successfully created with an initial deposit of " + customer.accountArr[Integer.parseInt(type)].getBalance());
+                        System.out.println("Your account was successfully created with an initial deposit of " + customer.accountArr[type].getBalance());
+                        break;
                     case 3:
                         customer = nameInput();
                         System.out.println("Please select which account balance you would like to see");
                         printAccountTypes();
-                        bank.printBalance(customer, accountTypeInput());
+                        type = accountTypeInput();
+                        bank.printBalance(customer, accountFromInput(customer, type));
                         break;
                     case 4:
                         customer = nameInput();
@@ -44,7 +43,7 @@ public class main {
                         printAccountTypes();
                         type = accountTypeInput();
                         System.out.println("Please enter how much money you would like to deposit");
-                        bank.deposit(customer, type, moneyValueInput());
+                        bank.deposit(customer, accountFromInput(customer, type), moneyValueInput());
                         System.out.println("Your transaction was successful");
                     case 5:
                         customer = nameInput();
@@ -52,7 +51,7 @@ public class main {
                         printAccountTypes();
                         type = accountTypeInput();
                         System.out.println("Please enter how much money you would like to withdraw");
-                        bank.withdraw(customer, type, moneyValueInput());
+                        bank.withdraw(customer, accountFromInput(customer, type), moneyValueInput());
                         System.out.println("Your transaction was successful");
                     case 6:
                         System.out.println("Goodbye");
@@ -62,8 +61,8 @@ public class main {
                 }
             } catch (IllegalArgumentException iae) {
                 System.err.println(iae.getMessage());
-            } catch (NullPointerException npe) {
-                System.err.println(npe.getMessage());
+            } catch (InvalidTransactionException ite) {
+                System.err.println(ite.getMessage());
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
@@ -120,7 +119,7 @@ public class main {
         return new Customer(first, last);
     }
 
-    public static String accountTypeInput() {
+    public static int accountTypeInput() {
         String type = "";
         while (type.equals("")) {
             type = sc.next();
@@ -129,7 +128,7 @@ public class main {
                 type = "";
             }
         }
-        return type;
+        return Integer.parseInt(type);
     }
 
     public static Currency moneyValueInput() {
@@ -142,5 +141,9 @@ public class main {
             }
         }
         return new Currency(value*100);
+    }
+
+    public static Account accountFromInput(Customer customer, int type) {
+        return customer.accountArr[type];
     }
 }

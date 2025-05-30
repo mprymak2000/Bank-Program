@@ -12,17 +12,16 @@ public class CD extends Account{
 
     Currency getBalance() {
         double balanceAfterInterest = balance.getValue()*((1+rate/100));
-        return new Currency((int) balanceAfterInterest)); 
+        return new Currency((int) balanceAfterInterest); 
     }
 
     public void withdraw(Currency moneyOut) {
         if (moneyOut == null) { 
             throw new IllegalArgumentException("Withdrawal amount must be positive.");
-        } elseIf (monthsToMaturity > monthsPassed) {
+        } else if (monthsToMaturity > monthsPassed) {
             throw new IllegalStateException("Your deposit has not matured yet."); 
         }
-        balance.subtract(moneyOut); 
-        withdrawalCount++;     
+        balance.subtract(moneyOut);  
     }
 
     public void deposit(Currency moneyIn) {
