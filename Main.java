@@ -181,7 +181,8 @@ public class Main {
         }
         int select;
         while (!scanner.hasNextInt() || (select = scanner.nextInt()) < 1 || select > optionsAmount) {
-            System.err.println("Please enter a valid option");  
+            System.err.println("Please enter a valid option"); 
+            scanner.next(); 
         } return select;
     }
 
