@@ -22,11 +22,11 @@ public class Main {
                         break;
                     case 2:
                         customer = nameInput();
-                        int customerNumber;
-                         for (int i =0; i < bank.length, i++) {
-                            if (bank[i].getFirst() == customer.getFirst() && bank[i].getLast() == customer.getLast()) 
+                        for (Customer c : bank.getListCustomers()) {
+                            if (c.equals(customer))
+                                customer = c; 
                          }
-                         System.out.println("Please select which account you would like to make");
+                        System.out.println("Please select which account you would like to make");
                         printAccountTypes();
                         type = accountTypeInput();
                         System.out.println("Please provide an initial deposit");

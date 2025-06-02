@@ -11,6 +11,10 @@ public class Bank {
         numCustomers++;
     }
 
+    public Customer[] getListCustomers () {
+        return bank;
+    }
+
     public void makeAccount(Customer name, int type, Currency money) throws InvalidTransactionException {
         Account newAccount;
         if (!parseArr(name, numCustomers))
