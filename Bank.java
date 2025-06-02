@@ -1,76 +1,91 @@
 public class Bank {
 
-    private Customer[] bank = new Customer[100];
+    public Customer[] bank;
     private int numCustomers = 0;
 
-    public void becomeCustomer(Customer name) throws InvalidTransactionException {
-        if (parseArr(name, numCustomers)) {
-            throw new InvalidTransactionException("You are already a customer of the bank");
-        }
-        bank[numCustomers] = new Customer(name.getFirstName(), name.getLastName(), numCustomers);
+    public Bank(int maxCustomers) {
+        bank = new Customer[maxCustomers];
+    }
+
+    public Customer becomeCustomer(Customer customer) throws InvalidTransactionException {
+        isNotCustomer(customer);
+        bank[numCustomers] = new Customer(customer.getFirstName(), customer.getLastName(), numCustomers);
         numCustomers++;
+        return bank[numCustomers-1];
     }
 
-    public Customer[] getListCustomers () {
-        return bank;
+    int getNumCustomers() {
+        return numCustomers;
     }
 
-    public void makeAccount(Customer name, int type, Currency money) throws InvalidTransactionException {
+    Account makeAccount(Customer customer, int type, Currency money) throws InvalidTransactionException {
+        isCustomer(customer);
         Account newAccount;
-        if (!parseArr(name, numCustomers))
-            throw new InvalidTransactionException("You need to become a customer first!");
-        if (type == 0) {
+        if (type == 1) {
             newAccount = new Checking(money);
-        }
-        else if (type == 1) {
+        } else if (type == 2) {
             newAccount = new Savings(money, 1.02);
-        }
-        else if (type == 2) {
-            newAccount = new CD(money,1.02);
-        } else throw new InvalidTransactionException("Please try selecting an account again");
-
-        try {
-            name.addAccount(newAccount);
-            System.out.println("success in making acc");
-        } catch (Exception e) {
-            e.getMessage();
-            e.printStackTrace();
-        }
+        } else if (type == 3) {
+            newAccount = new CD(money,1.10);
+        } else throw new InvalidTransactionException("Please try selecting an account again\n");
+        
+        customer.addAccount(newAccount);
+        System.out.println("Your account was created successfully with an initial balance of: " + money + "\n");
+        return newAccount;
     }
 
 
-    public void printBalance(Customer customer, Account account) throws InvalidTransactionException {
-        if (!parseArr(customer, numCustomers)) 
-            throw new InvalidTransactionException("You are not a customer of our bank");
-        try {
-            customer.balance(account);
-        } catch (Exception e) { e.getMessage(); }
+    void printBalance(Customer customer, Account account) throws InvalidTransactionException {
+    //    if (!validateCustomer(customer))
+    //        throw new InvalidTransactionException("Please become a customer first.");
+        isCustomer(customer);
+        System.out.println("Your balance is: " + customer.balance(account));
     }
 
 
-    public void deposit(Customer name, Account account, Currency money) {
-        try {
-            name.deposit(money, account); 
-        } catch (Exception e) { e.getMessage(); }
+    void deposit(Customer customer, Account account, Currency money) throws InvalidTransactionException {
+    //    if (!validateCustomer(customer))
+    //        throw new InvalidTransactionException("Please become a customer first.");
+        isCustomer(customer);
+        customer.deposit(money, account); 
+        System.out.print("Your transaction was successful.");
+        printBalance(customer, account);
     }
 
-    public void withdraw(Customer name, Account type, Currency money) {
-        try {    
-            name.withdraw(money, type);
-        } catch (Exception e) { e.getMessage(); } 
+    void withdraw(Customer customer, Account account, Currency money) throws InvalidTransactionException {
+     //   if (isNotCustomer(customer))
+     //       throw new InvalidTransactionException("Please become a customer first."); 
+        isCustomer(customer);
+        customer.withdraw(money, account);
+        System.out.print("Your transaction was successful.");
+        printBalance(customer, account);
     }
 
 
     // HELPER METHODS
-    public boolean parseArr(Customer name, int numCustomers) {
-        boolean b = true;
+    Customer findCustomer(Customer customer, int numCustomers) {
         if (numCustomers == 0) {
-            b = false;
+            return null;
         }
-        else if (!bank[numCustomers-1].equals(name))
-            parseArr(name, numCustomers-1);
-        return b;
+        if (bank[numCustomers-1].equals(customer)) {
+            return bank[numCustomers-1];
+        } else return findCustomer(customer, numCustomers-1);
     }
 
+    boolean isCustomer (Customer customer) throws InvalidTransactionException {
+        boolean isCustomer = false;
+        if (findCustomer(customer, numCustomers) != null) {
+            isCustomer = true;
+        } else throw new InvalidTransactionException("\nPlease become a customer first.");
+        return isCustomer;
+    }
 
+    boolean isNotCustomer (Customer customer) throws InvalidTransactionException {
+        boolean isNotCustomer = false;
+        if (findCustomer(customer, numCustomers) == null) {
+            isNotCustomer = true;
+        } else throw new InvalidTransactionException("\nYou are already a customer of MP bank.");
+        return isNotCustomer;
+    }
+    
 }

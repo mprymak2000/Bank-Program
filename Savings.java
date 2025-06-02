@@ -1,7 +1,7 @@
 public class Savings extends Account {
 
     private double rate;
-    private int withdrawalCount;
+    private int withdrawalCount=0;
     static final int withdrawalCountLimit = 3;
     static final String type = "Savings";
 
@@ -19,13 +19,13 @@ public class Savings extends Account {
 
     public void withdraw(Currency moneyOut) {
         if (moneyOut == null) { 
-            throw new IllegalArgumentException("Withdrawal amount must be positive.");
+            throw new IllegalArgumentException("An unexpected error occured.");
         } else if (balance.compareTo(moneyOut) == -1) {
-            throw new IllegalStateException("You don't have sufficient funds for this withdrawal.");
-        } else if (withdrawalCount > withdrawalCountLimit) {
-            throw new IllegalStateException("You've exceeded your withdrawal limit for this banking period.");
+            throw new IllegalArgumentException("You don't have sufficient funds for this withdrawal.");
+        } else if (withdrawalCount >= withdrawalCountLimit) {
+            throw new IllegalArgumentException("You've exceeded your withdrawal limit for this banking period.");
         }
-        balance.subtract(moneyOut); 
+        balance = balance.subtract(moneyOut); 
         withdrawalCount++;     
     }
 
@@ -33,7 +33,7 @@ public class Savings extends Account {
         if (moneyIn == null) { 
             throw new IllegalArgumentException("Deposit amount must be positive.");
         } 
-        balance.add(moneyIn); 
+        balance = balance.add(moneyIn); 
     }
 
 }

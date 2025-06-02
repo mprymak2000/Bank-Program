@@ -17,15 +17,21 @@ public class CD extends Account{
 
     public void withdraw(Currency moneyOut) {
         if (moneyOut == null) { 
-            throw new IllegalArgumentException("Withdrawal amount must be positive.");
+            throw new IllegalArgumentException("An unexpected error occured.");
         } else if (monthsToMaturity > monthsPassed) {
             throw new IllegalStateException("Your deposit has not matured yet."); 
         }
-        balance.subtract(moneyOut);  
+        balance = balance.subtract(moneyOut);  
     }
 
     public void deposit(Currency moneyIn) {
         throw new IllegalStateException("You cannot make additional deposits to this account");
+    }
+
+    public boolean isMature() {
+        if (monthsPassed < monthsToMaturity)
+            return false;
+        else return true;
     }
 
 }

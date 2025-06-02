@@ -8,18 +8,18 @@ public class Checking extends Account {
 
     public void withdraw(Currency moneyOut) {
         if (moneyOut == null) { 
-            throw new IllegalArgumentException("Withdrawal amount must be positive.");
+            throw new IllegalArgumentException("An unexpected error occured.");
         } else if (balance.compareTo(moneyOut) == -1) {
             throw new IllegalArgumentException("You do not have sufficient funds for this withdrawal.");
         } 
-        balance.subtract(moneyOut); 
+        balance = balance.subtract(moneyOut); 
     }
 
     public void deposit(Currency moneyIn) {
         if (moneyIn == null) { 
             throw new IllegalArgumentException("Deposit amount must be positive.");
         } 
-        balance.add(moneyIn); 
+        balance = balance.add(moneyIn); 
     }
 
     Currency getBalance() {
