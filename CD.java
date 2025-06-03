@@ -24,8 +24,8 @@ public class CD extends Account{
         balance = balance.subtract(moneyOut);  
     }
 
-    public void deposit(Currency moneyIn) {
-        throw new IllegalStateException("You cannot make additional deposits to this account");
+    public void deposit(Currency moneyIn) throws InvalidTransactionException {
+        throw new InvalidTransactionException("You cannot make additional deposits to this account");
     }
 
     public boolean isMature() {
