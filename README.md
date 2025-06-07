@@ -16,4 +16,5 @@ How it's implemented:
  - Main class provides a command-line interface for user interaction.
 
 Things to improve:
-  - Refine exception handling by introducing more specific, custom exceptions to better represent different error cases. 
+  - Refine exception handling by introducing more specific, custom exceptions to better represent different error cases.
+  - Create custom and dynamic data structure similar to Java's map implementations, supporting key-value storage with efficient lookup, insertion and deleting. 
