@@ -1,5 +1,13 @@
 public class InvalidTransactionException extends Exception {
-    public InvalidTransactionException(String message) {
-        super(message);
+    
+    private final String userMessage;
+
+    public InvalidTransactionException(String userMessage, String devMessage) {
+        super(devMessage);
+        this.userMessage = userMessage;
+    }
+
+    protected String getUserMessage() {
+        return userMessage;
     }
 }

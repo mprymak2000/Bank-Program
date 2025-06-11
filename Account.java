@@ -2,12 +2,14 @@ public abstract class Account {
     protected Currency balance;
 
     public Account(Currency initialDeposit) {
-        this.balance = new Currency(initialDeposit.getValue());
+        if (initialDeposit == null) throw new IllegalArgumentException("Initial deposit cannot be null");
+        if (initialDeposit.equals(initialDeposit)) throw new IllegalArgumentException("Initial deposit must be positive");
+        this.balance = initialDeposit;
     }
 
-    public abstract void withdraw(Currency money);
+    abstract void withdraw(Currency money);
 
-    public abstract void deposit(Currency moneyIn);
+    abstract void deposit(Currency moneyIn);
 
     abstract Currency getBalance();
 }
